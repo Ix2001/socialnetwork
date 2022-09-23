@@ -27,11 +27,9 @@ public class MessageService {
         messageRepository.save(message);
     }
     @Transactional
-    public void update(int id, Message updatedMessage){
-        Session session = sessionFactory.openSession();
-        Message currentMessage = session.get(Message.class,id);
+    public void update(Long id, Message updatedMessage){
+        Message currentMessage = messageRepository.findById(id).get();
         currentMessage.setText(updatedMessage.getText());
         currentMessage.setRecieverId(updatedMessage.getRecieverId());
-        session.close();
     }
 }

@@ -1,4 +1,4 @@
-package com.socialnetwork.org.User;
+package com.socialnetwork.org.user;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,7 +11,6 @@ import java.util.List;
 
 @Service
 public class UserService {
-    private SessionFactory sessionFactory;
     private final UserRepository userRepository;
     @Autowired
     public UserService(UserRepository userRepository) {
@@ -28,13 +27,11 @@ public class UserService {
         userRepository.save(userData);
     }
     @Transactional
-    public void update(int id, UserData updatedUser){
-        Session session = sessionFactory.openSession();
-        UserData currentUser = session.get(UserData.class,id);
+    public void update(Long id, UserData updatedUser){
+        UserData currentUser = userRepository.findById(id).get();
         currentUser.setEmail(updatedUser.getEmail());
         currentUser.setLastName(updatedUser.getLastName());
         currentUser.setFirstName(updatedUser.getFirstName());
         currentUser.setPassword(updatedUser.getPassword());
-        session.close();
     }
 }

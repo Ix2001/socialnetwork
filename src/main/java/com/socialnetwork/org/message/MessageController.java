@@ -1,8 +1,8 @@
 package com.socialnetwork.org.message;
 
-import com.socialnetwork.org.User.UserData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +18,7 @@ public class MessageController {
         this.messageService = messageService;
     }
 
-    @GetMapping()
+    @GetMapping
     public List<Message> getMessages(){
         return messageService.getMessages();
     }
@@ -26,8 +26,12 @@ public class MessageController {
     public void delete(Message message){
         messageService.delete(message);
     }
-    @GetMapping("/save")
+    @PostMapping("/save")
     public void save(Message message){
         messageService.save(message);
+    }
+    @PostMapping("/edit")
+    public void edit(Long id, Message message){
+        messageService.update(id,message);
     }
 }

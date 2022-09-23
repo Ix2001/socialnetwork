@@ -1,6 +1,7 @@
 package com.socialnetwork.org.conversation;
 
-import com.socialnetwork.org.userdataconversation.UserDataConversation;
+import com.socialnetwork.org.message.Message;
+import com.socialnetwork.org.user.UserData;
 
 import javax.persistence.*;
 
@@ -24,9 +25,15 @@ public class Conversation {
     )
     private Long id;
 
-    @ManyToMany()
-    @JoinColumn(name = "userdataconversation_id")
-    public List<UserDataConversation> conversations;
+    @ManyToMany(mappedBy = "conversations")
+    @Column(name = "users")
+    public List<UserData> users;
+    @OneToMany(mappedBy = "conversation")
+            @Column(name = "messages")
+    List<Message> messages;
+
+
+
 
     public Conversation() {
 
@@ -36,8 +43,24 @@ public class Conversation {
         this.id = id;
     }
 
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
+    }
+
     public Long getId() {
         return id;
+    }
+
+    public List<UserData> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<UserData> users) {
+        this.users = users;
     }
 
     public void setId(Long id) {

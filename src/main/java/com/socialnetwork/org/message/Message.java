@@ -1,6 +1,7 @@
 package com.socialnetwork.org.message;
 
-import com.socialnetwork.org.User.UserData;
+import com.socialnetwork.org.conversation.Conversation;
+import com.socialnetwork.org.user.UserData;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -14,7 +15,7 @@ public class Message {
     @Id
     @SequenceGenerator(
             name = "message_sequence",
-            sequenceName = "user_sequence",
+            sequenceName = "message_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
@@ -27,29 +28,21 @@ public class Message {
     @Column(name = "creation_date")
     private Date creationDate;
     @Column(name = "reciever_id")
-    private UserData recieverId;
+    private Long recieverId;
+
     @Column(name = "sender_id")
-    private UserData senderId;
+    private Long senderId;
+
+    @ManyToOne
+    @JoinColumn(name = "conversation_id")
+    private Conversation conversation;
 
 
 
     public Message() {
     }
 
-    public Message(Long id, String text, Date creationDate, UserData recieverId, UserData senderId) {
-        this.id = id;
-        this.text = text;
-        this.creationDate = creationDate;
-        this.recieverId = recieverId;
-        this.senderId = senderId;
-    }
 
-    public Message(String text, Date creationDate, UserData recieverId, UserData senderId) {
-        this.text = text;
-        this.creationDate = creationDate;
-        this.recieverId = recieverId;
-        this.senderId = senderId;
-    }
 
     public Long getId() {
         return id;
@@ -75,19 +68,28 @@ public class Message {
         this.creationDate = creationDate;
     }
 
-    public UserData getRecieverId() {
+    public Long getRecieverId() {
         return recieverId;
     }
 
-    public void setRecieverId(UserData recieverId) {
+    public void setRecieverId(Long recieverId) {
         this.recieverId = recieverId;
     }
 
-    public UserData getSenderId() {
+    public Long getSenderId() {
         return senderId;
     }
 
-    public void setSenderId(UserData senderId) {
+    public void setSenderId(Long senderId) {
         this.senderId = senderId;
     }
+
+    public Conversation getConversation() {
+        return conversation;
+    }
+
+    public void setConversation(Conversation conversation) {
+        this.conversation = conversation;
+    }
+
 }

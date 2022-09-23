@@ -1,14 +1,12 @@
-package com.socialnetwork.org.User;
+package com.socialnetwork.org.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(name = "/api/users")
+@RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
 
@@ -16,17 +14,20 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
-    @GetMapping()
+    @GetMapping
     public List<UserData> getUsers(){
        return userService.getUsers();
     }
-    @GetMapping("/delete")
+    @DeleteMapping("/delete")
     public void delete(UserData userData){
         userService.delete(userData);
     }
-    @GetMapping("/save")
+    @PostMapping("/register")
     public void save(UserData userData){
         userService.save(userData);
+    }
+    @PostMapping("/edit")
+    public void edit(Long id, UserData userData){
+        userService.update(id,userData);
     }
 }

@@ -1,7 +1,8 @@
-package com.socialnetwork.org.User;
+package com.socialnetwork.org.user;
 
-import com.socialnetwork.org.userdataconversation.UserDataConversation;
-import com.socialnetwork.org.message.Message;
+import com.socialnetwork.org.conversation.Conversation;
+import com.socialnetwork.org.like.Like;
+import com.socialnetwork.org.post.Post;
 
 import javax.persistence.*;
 
@@ -56,33 +57,52 @@ public class UserData {
     )
     private LocalDate dob;
 
-    @OneToMany()
-    List<Message> sendedMessages;
-    @OneToMany
-    List<Message> recievedMessages;
+    @ManyToMany
+            @JoinTable(name = "user_data_conversation",
+                    joinColumns = @JoinColumn(name ="user_data_id"),
+                    inverseJoinColumns = @JoinColumn(name = "conversation_id"))
+    List<Conversation> conversations;
 
-    @ManyToMany(mappedBy = "userDataId")
-    List<UserDataConversation> conversations;
+    @OneToMany(mappedBy = "user")
+    List<Post> posts;
 
+    @OneToMany(mappedBy = "userLike")
+    private List<Like> likes;
     public UserData() {
     }
 
-    public UserData(Long id, String firstName, String lastName, String email, String password, LocalDate dob) {
+    public UserData(Long id, String firstName, String lastName, String email, String password, LocalDate dob, List<Conversation> conversations, List<Post> posts, List<Like> likes) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.dob = dob;
+        this.conversations = conversations;
+        this.posts = posts;
+        this.likes = likes;
     }
 
-    public UserData(String firstName, String lastName, String email, String password, LocalDate dob) {
+    public UserData(String firstName, String lastName, String email, String password, LocalDate dob, List<Conversation> conversations, List<Post> posts, List<Like> likes) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.dob = dob;
+        this.conversations = conversations;
+        this.posts = posts;
+        this.likes = likes;
     }
+
+
+    public List<Conversation> getConversations() {
+        return conversations;
+    }
+
+    public void setConversations(List<Conversation> conversations) {
+        this.conversations = conversations;
+    }
+
 
     public Long getId() {
         return id;
@@ -130,6 +150,22 @@ public class UserData {
 
     public void setDob(LocalDate dob) {
         this.dob = dob;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
+    public List<Like> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(List<Like> likes) {
+        this.likes = likes;
     }
 
     @Override
