@@ -26,7 +26,7 @@ public class UserController {
     public void save(UserData userData){
         userService.save(userData);
     }
-    @PostMapping("/edit")
+    @PutMapping("/edit")
     public void edit(Long id, UserData userData){
         userService.update(id,userData);
     }

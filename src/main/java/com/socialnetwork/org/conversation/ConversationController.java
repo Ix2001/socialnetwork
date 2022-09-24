@@ -25,4 +25,8 @@ public class ConversationController {
     public void delete(Conversation conversation){
         conversationService.delete(conversation);
     }
+    @PutMapping("/edit")
+    public void edit(Long id, Conversation conversation){
+        conversationService.update(id, conversation);
+    }
 }

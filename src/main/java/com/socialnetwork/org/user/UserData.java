@@ -1,17 +1,18 @@
 package com.socialnetwork.org.user;
 
+import com.socialnetwork.org.comment.Comment;
 import com.socialnetwork.org.conversation.Conversation;
 import com.socialnetwork.org.like.Like;
 import com.socialnetwork.org.post.Post;
+import lombok.Data;
 
 import javax.persistence.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
-
 import static javax.persistence.GenerationType.SEQUENCE;
 
+@Data
 @Entity
 @Table(name = "user_data")
 public class UserData {
@@ -68,128 +69,7 @@ public class UserData {
 
     @OneToMany(mappedBy = "userLike")
     private List<Like> likes;
-    public UserData() {
-    }
 
-    public UserData(Long id, String firstName, String lastName, String email, String password, LocalDate dob, List<Conversation> conversations, List<Post> posts, List<Like> likes) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.dob = dob;
-        this.conversations = conversations;
-        this.posts = posts;
-        this.likes = likes;
-    }
-
-    public UserData(String firstName, String lastName, String email, String password, LocalDate dob, List<Conversation> conversations, List<Post> posts, List<Like> likes) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.dob = dob;
-        this.conversations = conversations;
-        this.posts = posts;
-        this.likes = likes;
-    }
-
-
-    public List<Conversation> getConversations() {
-        return conversations;
-    }
-
-    public void setConversations(List<Conversation> conversations) {
-        this.conversations = conversations;
-    }
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public LocalDate getDob() {
-        return dob;
-    }
-
-    public void setDob(LocalDate dob) {
-        this.dob = dob;
-    }
-
-    public List<Post> getPosts() {
-        return posts;
-    }
-
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
-    }
-
-    public List<Like> getLikes() {
-        return likes;
-    }
-
-    public void setLikes(List<Like> likes) {
-        this.likes = likes;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof UserData)) return false;
-        UserData userData = (UserData) o;
-        return Objects.equals(getId(), userData.getId()) && Objects.equals(getFirstName(), userData.getFirstName()) && Objects.equals(getLastName(), userData.getLastName()) && Objects.equals(getEmail(), userData.getEmail()) && Objects.equals(getPassword(), userData.getPassword()) && Objects.equals(getDob(), userData.getDob());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getFirstName(), getLastName(), getEmail(), getPassword(), getDob());
-    }
-
-    @Override
-    public String toString() {
-        return "UserData{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", dob=" + dob +
-                '}';
-    }
+    @OneToMany(mappedBy = "userId")
+    private List<Comment> comments;
 }

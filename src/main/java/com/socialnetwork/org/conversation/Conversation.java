@@ -2,6 +2,7 @@ package com.socialnetwork.org.conversation;
 
 import com.socialnetwork.org.message.Message;
 import com.socialnetwork.org.user.UserData;
+import lombok.Data;
 
 import javax.persistence.*;
 
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static javax.persistence.GenerationType.SEQUENCE;
-
+@Data
 @Entity
 @Table(name = "conversation")
 public class Conversation {
@@ -31,52 +32,4 @@ public class Conversation {
     @OneToMany(mappedBy = "conversation")
             @Column(name = "messages")
     List<Message> messages;
-
-
-
-
-    public Conversation() {
-
-    }
-
-    public Conversation(Long id) {
-        this.id = id;
-    }
-
-    public List<Message> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(List<Message> messages) {
-        this.messages = messages;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public List<UserData> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<UserData> users) {
-        this.users = users;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Conversation)) return false;
-        Conversation that = (Conversation) o;
-        return Objects.equals(getId(), that.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId());
-    }
 }

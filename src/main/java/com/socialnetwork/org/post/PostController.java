@@ -27,7 +27,7 @@ public class PostController {
     public void save(Post post){
         postService.save(post);
     }
-    @PostMapping("/edit")
+    @PutMapping("/edit")
     public void update(Long id, Post post){
         postService.update(id,post);
     }
