@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/v1/users")
 public class UserController {
     private final UserService userService;
 
@@ -23,7 +23,7 @@ public class UserController {
         userService.delete(userData);
     }
     @PostMapping("/register")
-    public void save(UserData userData){
+    public void save(@RequestBody UserData userData){
         userService.save(userData);
     }
     @PutMapping("/edit")

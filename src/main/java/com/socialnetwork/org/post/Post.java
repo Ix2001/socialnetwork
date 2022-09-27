@@ -1,6 +1,7 @@
 package com.socialnetwork.org.post;
 
 
+import com.socialnetwork.org.Media.Media;
 import com.socialnetwork.org.comment.Comment;
 import com.socialnetwork.org.like.Like;
 import com.socialnetwork.org.user.UserData;
@@ -41,4 +42,7 @@ public class Post {
 
     @OneToMany(mappedBy = "postId")
     private List<Comment> comments;
+
+    @OneToMany(mappedBy = "postId")
+    private List<Media> media;
 }

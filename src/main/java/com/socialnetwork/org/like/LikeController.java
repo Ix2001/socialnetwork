@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/like")
+@RequestMapping("/api/v1/likes")
 public class LikeController {
     private final LikeService likeService;
 

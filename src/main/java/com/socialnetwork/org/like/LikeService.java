@@ -28,6 +28,5 @@ public class LikeService {
     public void update(Long id, Like updatedLike){
         Like currentLike = likeRepository.findById(id).get();
         currentLike.setPostLike(updatedLike.getPostLike());
-        currentLike.setUserLike(updatedLike.getUserLike());
     }
 }
