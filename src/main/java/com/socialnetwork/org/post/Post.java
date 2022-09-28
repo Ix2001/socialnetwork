@@ -1,16 +1,16 @@
 package com.socialnetwork.org.post;
 
 
-import com.socialnetwork.org.Media.Media;
 import com.socialnetwork.org.comment.Comment;
-import com.socialnetwork.org.like.Like;
+import com.socialnetwork.org.like.PostLike;
+import com.socialnetwork.org.pictures.PostPhotoes;
 import com.socialnetwork.org.user.UserData;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
+
 
 import static javax.persistence.GenerationType.SEQUENCE;
 @Data
@@ -38,11 +38,10 @@ public class Post {
     private UserData user;
 
     @OneToMany(mappedBy = "postLike")
-    private List<Like> likes;
+    private List<PostLike> postLikes;
 
     @OneToMany(mappedBy = "postId")
     private List<Comment> comments;
-
-    @OneToMany(mappedBy = "postId")
-    private List<Media> media;
+    @OneToMany(mappedBy = "post")
+    private List<PostPhotoes> postPhotoes;
 }

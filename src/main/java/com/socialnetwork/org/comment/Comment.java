@@ -1,5 +1,6 @@
 package com.socialnetwork.org.comment;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.socialnetwork.org.post.Post;
 import com.socialnetwork.org.user.UserData;
 import lombok.Data;
@@ -33,6 +34,7 @@ public class Comment {
     @JoinColumn(name = "post_id")
     private Post postId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserData userId;

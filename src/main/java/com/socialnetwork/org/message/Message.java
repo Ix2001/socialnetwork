@@ -5,6 +5,7 @@ import com.socialnetwork.org.user.UserData;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 import static javax.persistence.GenerationType.SEQUENCE;
@@ -27,7 +28,7 @@ public class Message {
     @Column(name = "text")
     private String text;
     @Column(name = "creation_date")
-    private Date creationDate;
+    private LocalDate creationDate;
 /*    @Column(name = "reciever_id")
     private Long recieverId;
 
@@ -45,5 +46,7 @@ public class Message {
     @ManyToOne
     @JoinColumn(name = "conversation_id")
     private Conversation conversation;
+    private Boolean isRead;
+    private LocalDate dateOfRead;
 
 }

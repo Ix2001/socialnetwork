@@ -1,4 +1,4 @@
-package com.socialnetwork.org.Media;
+package com.socialnetwork.org.like;
 
 import com.socialnetwork.org.post.Post;
 import lombok.Data;
@@ -6,26 +6,25 @@ import lombok.Data;
 import javax.persistence.*;
 
 import static javax.persistence.GenerationType.SEQUENCE;
-
 @Data
 @Entity
-@Table(name = "media")
-public class Media {
+@Table(name = "likes")
+public class PostLike {
     @Id
     @SequenceGenerator(
-            name = "media_sequence",
+            name = "like_sequence",
             sequenceName = "like_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = SEQUENCE,
-            generator = "media_sequence"
+            generator = "like_sequence"
     )
     private Long id;
+
     @ManyToOne
-    @JoinColumn(name = "post_id")
-    private Post postId;
-    @Column(name = "path")
-    private String path;
+    @JoinColumn(name = "post_like")
+    private Post postLike;
+
 
 }

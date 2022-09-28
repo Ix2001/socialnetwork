@@ -1,6 +1,7 @@
 package com.socialnetwork.org.message;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,20 +16,20 @@ public class MessageController {
         this.messageService = messageService;
     }
 
-    @GetMapping
-    public List<Message> getMessages(){
-        return messageService.getMessages();
+    @PostMapping("/send/{username}")
+    public void send(Authentication authentication, @PathVariable String username, @RequestBody Message message) {
+        messageService.send(authentication.getName(), username, message);
     }
-    @GetMapping("/delete")
-    public void delete(Message message){
-        messageService.delete(message);
+    @GetMapping("/inbox")
+    public List<Message> getAllMessages(Authentication authentication) {
+        return messageService.getAllMessages(authentication.getName());
     }
-    @PostMapping("/save")
-    public void save(Message message){
-        messageService.save(message);
+    @DeleteMapping("/delete/{id}")
+    public void deleteMyMessage(Authentication authentication, @PathVariable Long id) {
+        messageService.deleteMyMessage(authentication.getName(), id);
     }
-    @PutMapping("/edit")
-    public void edit(Long id, Message message){
-        messageService.update(id,message);
+    @PatchMapping("/edit/{id}")
+    public void editMyMessage(Authentication authentication, @PathVariable Long id, @RequestBody Message message) {
+        messageService.editMyMessage(authentication.getName(), id, message);
     }
 }

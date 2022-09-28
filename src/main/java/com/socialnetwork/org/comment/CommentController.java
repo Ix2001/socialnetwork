@@ -1,6 +1,7 @@
 package com.socialnetwork.org.comment;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,20 +16,16 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @GetMapping
-    public List<Comment> getComments(){
-        return commentService.getComments();
+    @PostMapping("/{id}")
+    public void postComment(@PathVariable Long id, @RequestBody Comment comments, Authentication authentication) {
+        commentService.postComment(id, comments, authentication.getName());
     }
-    @PostMapping("/save")
-    public void save(Comment comment){
-        commentService.save(comment);
+    @DeleteMapping("/{id}")
+    public void deleteComment(@PathVariable Long id, Authentication authentication) {
+        commentService.deleteComment(id, authentication.getName());
     }
-    @DeleteMapping("/delete")
-    public void delete(Comment comment){
-        commentService.delete(comment);
-    }
-    @PutMapping("/edit")
-    public void edit(Long id, Comment comment){
-        commentService.update(id, comment);
+    @PatchMapping("/{id}")
+    public void updateComment(@PathVariable Long id, @RequestBody Comment comments, Authentication authentication) {
+        commentService.updateComment(id, comments, authentication.getName());
     }
 }

@@ -1,8 +1,10 @@
 package com.socialnetwork.org.user;
 
+
 import com.socialnetwork.org.comment.Comment;
 import com.socialnetwork.org.conversation.Conversation;
 import com.socialnetwork.org.followers.Followers;
+import com.socialnetwork.org.pictures.UserPictures;
 import com.socialnetwork.org.post.Post;
 import lombok.*;
 
@@ -11,6 +13,8 @@ import javax.persistence.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
+
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Data
@@ -52,7 +56,7 @@ public class UserData {
             columnDefinition = "TEXT"
     )
     @NonNull
-    private String email;
+    private String username;
 
     @Column(
             name = "password",
@@ -79,10 +83,19 @@ public class UserData {
     List<Post> posts;
 
 
-    @OneToMany(mappedBy = "userId")
+    @OneToMany(mappedBy = "userId",fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Comment> comments;
     @OneToMany(mappedBy = "from", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Followers> following;
     @OneToMany(mappedBy = "to", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Followers> followers;
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<UserPictures> personalPhotos;
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "person_role", joinColumns = @JoinColumn(name = "person_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles;
+    private Boolean isBanned;
+    private Boolean isDeleted;
+    private Boolean isActive;
 }
