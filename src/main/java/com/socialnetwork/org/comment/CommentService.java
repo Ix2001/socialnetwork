@@ -33,7 +33,7 @@ public class CommentService {
         UserData user = userRepository.findByUsername(username).orElseThrow(() -> new UserDoesNotExistException(username));
         if (comment.getUserId().equals(user)) {
             commentRepository.delete(comment);
-        } else if (comment.getPostId().getUser().equals(user)) {
+        } else if (comment.getPostId().getAuthor().equals(user)) {
             commentRepository.delete(comment);
         } else {
             throw new IllegalArgumentException("You are not allowed to delete this comment");

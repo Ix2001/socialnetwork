@@ -79,7 +79,7 @@ public class UserData {
             inverseJoinColumns = @JoinColumn(name = "conversation_id"))
     List<Conversation> conversations;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "author")
     List<Post> posts;
 
 

@@ -8,6 +8,7 @@ import com.socialnetwork.org.user.UserData;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -28,14 +29,14 @@ public class Post {
             generator = "post_sequence"
     )
     private int id;
-    @Column(name = "description")
-    private String description;
+    @Column(name = "text")
+    private String text;
     @Column(name = "creation_date")
-    private Date creationDate;
+    private LocalDate creationDate;
 
     @ManyToOne()
     @JoinColumn(name = "user_id")
-    private UserData user;
+    private UserData author;
 
     @OneToMany(mappedBy = "postLike")
     private List<PostLike> postLikes;

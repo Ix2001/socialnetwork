@@ -1,6 +1,7 @@
 package com.socialnetwork.org.post;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,20 +16,27 @@ public class PostController {
     public PostController(PostService postService) {
         this.postService = postService;
     }
-    @GetMapping
-    public List<Post> getPosts(){
-        return postService.getPosts();
+
+    @GetMapping("/{page}")
+    public List<PostPublicDTO> getMyPosts(Authentication authentication, @PathVariable Integer page) {
+        return postService.getPostsByUsername(authentication.getName(), page);
     }
-    @DeleteMapping("/delete")
-    public void delete(Post post){
-        postService.delete(post);
+    @GetMapping("/following/{page}")
+    public List<PostPublicDTO> getFollowingPosts(Authentication authentication, @PathVariable Integer page) {
+        return postService.getFollowingPosts(authentication.getName(), page);
     }
-    @PostMapping("/save")
-    public void save(Post post){
-        postService.save(post);
+
+    @GetMapping("/{username}/{page}")
+    public List<PostPublicDTO> getPostsByUsername(@PathVariable String username, @PathVariable Integer page) {
+        return postService.getPostsByUsername(username, page);
     }
-    @PutMapping("/edit")
-    public void update(Long id, Post post){
-        postService.update(id,post);
+    @PostMapping
+    public void registerPost(@RequestBody PostRegisterDTO postRegisterDTO, Authentication authentication) {
+        postService.registerPost(postRegisterDTO, authentication.getName());
     }
+    @PatchMapping("/like/{id}")
+    public void likePost(Authentication authentication, @PathVariable Long id) {
+        postService.likePost(authentication.getName(), id);
+    }
+
 }

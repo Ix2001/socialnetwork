@@ -1,6 +1,7 @@
 package com.socialnetwork.org.like;
 
 import com.socialnetwork.org.post.Post;
+import com.socialnetwork.org.user.UserData;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -26,5 +27,7 @@ public class PostLike {
     @JoinColumn(name = "post_like")
     private Post postLike;
 
-
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "author_of_like")
+    private UserData authorOfLike;
 }
